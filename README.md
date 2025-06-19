@@ -139,7 +139,7 @@ The screenshot shows the lines the script found, for which it also found a doppl
 The weak lines at the beginning of the hyperfine structure are not identified by the automatic peak finder routine because they are considered to weak compared to the rest of the spectrum and have to be picked manually by the user (double left click, double right click, copy to clipboard by clicking on respective fields).
 ![image](https://github.com/user-attachments/assets/cb7d6e55-ff66-4f04-9842-bfb7b7858490)
 
-## Example 3: A single 1GHz chirp broadband .dat file
+### Example 3: A single 1GHz chirp broadband .dat file
 Shown is a broadband spectrum of OCS in Neon also shown in the PARIS article.
 The range parameter is set to **501 MHz**
 Again run with doppler peak finding, this time I simply entered two times the centre frequency and dopplerspliting of the main isotopologue of OCS, because 2 different lines are just to improve things, but not strictly required.
@@ -147,7 +147,7 @@ For the broadband measurments at PARIS there is always the DC-artifact, by defau
 
 ![image](https://github.com/user-attachments/assets/8d914a19-44e0-4720-93e0-63027c9a1c4f)
 
-## Example 4: Multiple 1GHz chirp broadband .dat files
+### Example 4: Multiple 1GHz chirp broadband .dat files
 The PARIS broadband experiments works in 1GHz steps. So do the Hannover-IMPACT experiments it is possible to stitch them together shown here on the example of a portion of the 234-Tri-fluoro-toluene spectrum. (Canadian Journal of Physics 17 October 2019 https://doi.org/10.1139/cjp-2019-0477)
 
 The range parameter is set to **501 MHz** 

@@ -85,7 +85,8 @@ forcecalc= 1      # if zero, the script checks if it already ran once and produc
 
 rangeMHz = 501    # Often and especially in resonator measurments, you do not want to plot the whole FFT Spectrum. Rather you want to plot a certain region around your 
                   # resonator frequency. For 1GHz broadband measurments you would use a value of about 501 MHz, because this is +- again. 
-                  # for resonator scans about HWHM=FWHM/2 = 0.5MHz of the resonator should be good. If your mode ran away a bit during the scan, you might want to increase this 
+                  # for resonator scans about FWHM = 1.0MHz of the resonator should be good. If your mode ran away a bit during the scan, you might want to increase this
+                  # also if stitching artificats appear (jumps in intensity) you can remove them by increasing this value.
 
 ##### ADVANCED INPUT
                      # If you change these parameters, you might want to set forcecalc=1 to overwrite previous run.
@@ -132,12 +133,16 @@ stickspectrum and doppler finder are deactivated
 ![image](https://github.com/user-attachments/assets/2ee1daf2-66fa-4d4f-9d8b-48e4e37e7876)
 
 ### Example 2: A resonator Scan - multiple .dat files
+update 20.06.2025 : increased range parameter
+
 Shown is a portion of the 4MPY spectrum also shown in the PARIS article in Fig 19.
-The range parameter is set to **0.5MHz**
+The range parameter is set to **1.0MHz**
+The larger the range parameter the better the stitiching works, at cost of signal-to-noise.
 Here the startid and endidx have different values. I also actived the doppler finding routine, entering the centre frequency and the dopplersplitting of two lines into stick_exampledoppler (they do not have to be really at the start or the end, but can be anywhere in the spectrum)
 The screenshot shows the lines the script found, for which it also found a doppler pair and saved the centre frequency and other data into the STICKS_DOPPLER file.
 The weak lines at the beginning of the hyperfine structure are not identified by the automatic peak finder routine because they are considered to weak compared to the rest of the spectrum and have to be picked manually by the user (double left click, double right click, copy to clipboard by clicking on respective fields).
-![image](https://github.com/user-attachments/assets/cb7d6e55-ff66-4f04-9842-bfb7b7858490)
+![image](https://github.com/user-attachments/assets/dba070ee-3f4f-49ba-9631-0fd8300a6344)
+
 
 ### Example 3: A single 1GHz chirp broadband .dat file
 Shown is a broadband spectrum of OCS in Neon also shown in the PARIS article.

@@ -17,8 +17,9 @@ maskwidth=0.1       # +-width will be removed by mask in MHz.
 startidx =  98280     # Starting index, you can ommit or add the leading zeros, it works either way. the file indices must consist of 5 digits.
 endidx   = 98284      # End index, again, the leading zeros are not nessecary but can be added for fun
 forcecalc= 1       # if zero, the script checks if it already ran once and produced a spectrum file and plots that instead of recalculating. If 1, recalculation is forced.
-rangeMHz = 0.5    # plus and minus this value around probe frequency is what will be added from each scan step. About HWHM=FWHM/2=0.5MHz should be good. If your mode ran away a bit, you might want to increase this values
+rangeMHz = 1.0    # plus and minus this value around probe frequency is what will be added from each scan step. About HWHM=FWHM/2=0.5MHz should be good. If your mode ran away a bit, you might want to increase this values
                    # For chirps: about chirp width/2 should be good. e.g. for 1GHz chirp rangeMHz= 500.
+                   # stitched scans +-1.5
 ##### ADVANCED INPUT
 
 Kaiser = 0.0      # application of a kaiserwindow with kaiserparameter Kaiser=beta. If zero, no kaiserwindow is used. If you change this, you might want to set forcecalc=1 to overwrite previous run.

@@ -133,14 +133,15 @@ stickspectrum and doppler finder are deactivated
 ![image](https://github.com/user-attachments/assets/2ee1daf2-66fa-4d4f-9d8b-48e4e37e7876)
 
 ### Example 2: A resonator Scan - multiple .dat files
-update 20.06.2025 : increased range parameter
+update 20.06.2025 : increased range parameter and updated readme descritpion a little.
 
-Shown is a portion of the 4MPY spectrum also shown in the PARIS article in Fig 19.
-The range parameter is set to **1.0MHz**
-The larger the range parameter the better the stitiching works, at cost of signal-to-noise.
-Here the startid and endidx have different values. I also actived the doppler finding routine, entering the centre frequency and the dopplersplitting of two lines into stick_exampledoppler (they do not have to be really at the start or the end, but can be anywhere in the spectrum)
-The screenshot shows the lines the script found, for which it also found a doppler pair and saved the centre frequency and other data into the STICKS_DOPPLER file.
-The weak lines at the beginning of the hyperfine structure are not identified by the automatic peak finder routine because they are considered to weak compared to the rest of the spectrum and have to be picked manually by the user (double left click, double right click, copy to clipboard by clicking on respective fields).
+Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to 1.0 MHz — increasing this value generally improves the stitching quality, though at the expense of signal-to-noise ratio (opening single flies will still give you the best signal-to-noise).
+
+In this example, startidx and endidx are set to different values. The Doppler line detection routine is also activated: by providing the central frequency and the Doppler splitting of two lines to the stick_exampledoppler script, the script attempts to identify corresponding Doppler pairs. These reference lines do not really need to be located at the spectrum’s start or end - they can be located anywhere.
+
+The screenshot shows the lines that were automatically detected by the script marked with green bars. For each detected Doppler pair, the central frequency and other relevant data are saved to the STICKS_DOPPLER file.
+
+Note: The weaker lines at the ends of the hyperfine structure are not picked up by the automatic peak-finding routine, as they are too weak relative to the average rest of the spectrum, which can happen even for stronger lines if only dense small sections of a spectrum are measured. These weaker lines must be selected manually by the user via the GUI (double left-click to mark left Doppler, double right-click to mark right Doppler, and use the respective fields to copy data to the clipboard). 
 ![image](https://github.com/user-attachments/assets/dba070ee-3f4f-49ba-9631-0fd8300a6344)
 
 

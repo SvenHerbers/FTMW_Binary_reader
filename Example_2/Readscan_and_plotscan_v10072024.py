@@ -32,7 +32,7 @@ stick_dopplerread = True # if this is turned on an approach is made to find dopp
 
 
 ######## Advanced control parameters
-rezero = 1.0           # substract noisefloor by the inverse squared value weighted average of each section.
+rezero = False           # substract noisefloor by the inverse squared value weighted average of each section.
 stickthreshold = 0.5   # threshold in terms of global spectrum. local threshold hardwired to 2.5 for three datapoints at and around maximum.
 stickmaxtest = 5       # checks for every point, stickmaxtest left and right of it, if it is the largest, it is identified as a local maximum and subjected to interpolation
 stick_exampledoppler = [[ 16906.28269,     0.04489],[16906.84839,    0.04588]] # - uses two dopplersplittings (+- from centre frequency)  with two frequencies, to calculate the expected dopplersplit throughout the spectrum

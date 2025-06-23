@@ -66,7 +66,7 @@ JUGDATA = False     # If False, Ftmw++ .dat file is loaded, if True, fies from o
 
 PowerSpectrum = False  #True shows the square of the usual amplitude spectrum, which is preferred by some, but the default is False and the amplitude spectrum is shown.
 
-masklines=[999.9123,12321.0]  # Sometimes you have artifacts or dirt in your measurment that you know off. 
+masklines=[999.9123,12321.0]  # Sometimes you have artifacts or dirt in your measurment that you know of. 
                               # To put a zero-mask over it add the centre of the region into the 'masklines' list.
 
 maskwidth=0.1                 # +-width around centre that will be removed by mask in MHz.
@@ -83,10 +83,12 @@ forcecalc= 1      # if zero, the script checks if it already ran once and produc
                   # If 1, recalculation is forced.
                   # This can really save time when you just want to open the previously computed spectrum and not run through all .dat files again.
 
-rangeMHz = 501    # Often and especially in resonator measurments, you do not want to plot the whole FFT Spectrum. Rather you want to plot a certain region around your 
-                  # resonator frequency. For 1GHz broadband measurments you would use a value of about 501 MHz, because this is +- again. 
-                  # for resonator scans about FWHM = 1.0MHz of the resonator should be good. If your mode ran away a bit during the scan, you might want to increase this
-                  # also if stitching artificats appear (jumps in intensity) you can remove them by increasing this value.
+rangeMHz = 501    # In many cases, especially in resonator measurements, you don’t want to plot the entire FFT spectrum.
+                  # Instead, you focus on a specific region around the resonator frequency.
+                  # For 1 GHz broadband measurements, a value around +-501 MHz works.
+                  # For narrow resonator scans, a value close to the resonator’s FWHM (~1.0 MHz) is usually sufficient.
+                  # If the mode drifts during the scan, consider increasing this value.
+                  # Similarly, if stitching artifacts (intensity jumps) appear, increasing this range can help mitigate them.
 
 ##### ADVANCED INPUT
                      # If you change these parameters, you might want to set forcecalc=1 to overwrite previous run.
@@ -104,7 +106,7 @@ stick_dopplerread = False   # if this is turned on an approach is made to find d
 
 
 ######## Advanced control parameters 
-rezero = 0.0           # substract noisefloor by the inverse squared value weighted average of each section. - can help when stitchin broadband data togehter.
+rezero = False         # substract noisefloor by the inverse squared value weighted average of each section. Should not be used for stitching resonator data, but can be helpful when stitching broadband data.
 stickthreshold = 2.5   # threshold in terms of global spectrum, reduce to perhaps find more lines. local threshold hardwired to 2.5 for three datapoints at and around maximum.
 stickmaxtest = 5       # checks for every point, stickmaxtest left and right of it, if it is the largest, it is identified as a local maximum and subjected to interpolation
 
@@ -134,6 +136,7 @@ stickspectrum and doppler finder are deactivated
 
 ### Example 2: A resonator Scan - multiple .dat files
 update 20.06.2025 : increased range parameter and updated readme descritpion a little.
+update 23.06.2025 : changed rezero to False, it should not be used with resonator scans.
 
 Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to 1.0 MHz — increasing this value generally improves the stitching quality, though at the expense of signal-to-noise ratio (opening single flies will still give you the best signal-to-noise).
 

@@ -111,7 +111,7 @@ I recommend to start with one of the examples below, which are preconfigured for
 This spectrum of O13CS is from the PARIS article published in Rev. Sci. Instrum. 96, 054706 (2025)
 https://doi.org/10.1063/5.0256434
 The range parameter is set to **0.5 MHz**
-The Readscan_and_plotscan_v09082025.py script loads a single file and creates an amplitude spectrum with no Kaiser window applied by default. To reproduce the article figure, run the script with Kaiser=10.0 and apply a tail cut of a few 100µs.
+The Readscan_and_plotscan_v09082025.py script loads a single file and creates an amplitude spectrum with no Kaiser window applied by default. To reproduce the article figure, run the script with `Kaiser=10.0` and apply a `tail_cut` of a few 100µs.
 Stick spectrum generation is enabled, while Doppler finder is disabled, producing a file listing individual Doppler components.
 The figure shows the resulting plot after running the script. Detected single lines are marked with red bars to help identify any missed lines for manual selection.
 The created ...SICKS_single.txt then contains the four lines and their intensities:
@@ -125,7 +125,7 @@ The created ...SICKS_single.txt then contains the four lines and their intensiti
 
 
 ### Example 2: A resonator Scan - multiple .dat files
-Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to 1.0 MHz — increasing this value generally improves stitching quality but may reduce signal-to-noise ratio. (Opening single files still gives the best signal-to-noise.)
+Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to `rangeMHz = 1.0` MHz — increasing this value generally improves stitching quality but may reduce signal-to-noise ratio. (Opening single files still gives the best signal-to-noise.)
 
 In this example, startidx and endidx are set to different values. The Doppler line detection routine is activated: by providing the central frequency and Doppler splitting of two reference lines to stick_exampledoppler, the script attempts to identify corresponding Doppler pairs throughout the spectrum. These reference lines can be located anywhere, not necessarily at the spectrum’s start or end. To also find weaker peaks in the spectrum, the threshold parameters were finetuned.
 
@@ -167,7 +167,7 @@ Note: Weaker lines at the edges of the hyperfine structure may not be picked up 
 
 
 ### Example 3: A single 1GHz chirp broadband .dat file
-Shown is a broadband spectrum of OCS in Neon, also featured in the PARIS article. The range parameter is set to +-501 MHz for the broadband spectrum, which comprises slighlty more than 1GHz of data.
+Shown is a broadband spectrum of OCS in Neon, also featured in the PARIS article. The range parameter is set to `rangeMHz = 501.0` MHz for the broadband spectrum, covering slighlty more than 1GHz of data.
 
 Doppler peak finding is enabled. Here, I used the center frequency and Doppler splitting of the main OCS isotopologue twice to improve detection—using two different lines helps but isn’t strictly necessary.
 ```
@@ -193,9 +193,9 @@ maskwidth=      0.1     # +-width (MHz) to mask
 ### Example 4: Multiple 1GHz chirp broadband .dat files
 The PARIS broadband experiments typically work in 1 GHz steps, as do the Hannover-IMPACT experiments. This example shows how to stitch such broadband files together using a portion of the 234-Trifluoro-toluene spectrum. (Canadian Journal of Physics 17 October 2019 https://doi.org/10.1139/cjp-2019-0477)
 
-The range parameter is set to **501 MHz**. 
+The range parameter is set to `rangeMHz = 501.0` MHz. 
 The computation takes longer, and the console will show progress through the files.
-If you’ve run the script once and only want to re-plot results, consider setting forcecalc=0 to skip recalculation.
+If you’ve run the script once and only want to re-plot results, consider setting `forcecalc=False` to skip recalculation.
 Notice the many Doppler pairs found!
 ```
 stickspectrum       = True      # Produce stick spectrum (uses stickthreshold)
@@ -212,10 +212,10 @@ stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental
 
 ## Version progress
 -    v09082025:
-    *    Updated README and examples
-    *    General Code cleanup (removal of comments / dead code)
-    *    renamed Kaiser_Head and Kaiser_Tail to head_cut and tail_cut.
-    *    the CompiledSpectrum_MASKED files are now only created, if maskedlines is not empty
-    *    Changed local threshold from being hardwired to 2.5 to be a user input (stick_localthresh).
+     *    Updated README and examples
+     *    General code cleanup (removed comments and dead code)
+     *    Renamed `Kaiser_Head` and `Kaiser_Tail` to `head_cut` and `tail_cut`
+     *    `CompiledSpectrum_MASKED` files are now created only if maskedlines is not empty
+     *    Changed local threshold from a fixed 2.5 to user-configurable via(stick_localthresh).
 -    First Uploaded Version: v11072024
 

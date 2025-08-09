@@ -34,13 +34,12 @@ Once the script is launched and the parameters are configured correctly (see sec
 As with most Matplotlib plots, you can zoom in by clicking the magnifying glass icon and dragging a window over your region of interest.
 Other standard navigation tools are also available—see the Matplotlib Pyplot Tutorial for details.
 
-Notice the fields labeled "Intensity", "LeftDoppler", "RightDoppler", "Dopplersplit", and "CenterFreq".
+Notice the fields labeled `Intensity`, `LeftDoppler`, `RightDoppler`, `DopplerSplit`, and `CenterFreq`.
 
 Once a region of interest is selected, you can:
 
-    -Double left-click to mark the left line of a Doppler pair.
-
-    -Double right-click to mark the right line.
+-    Double left-click to mark the left line of a Doppler pair.
+-    Double right-click to mark the right line.
 
 or just stay with a single line if your machine does not show Doppler splitting.
 
@@ -102,7 +101,7 @@ After setting up these paramters you should be able to simply run the script!
 The output files saved are the two column space separated .txt files of the spectrum and of the masked spectrum.
 In case stickspectrum was true all found single peaks are saved in a txt file ending with ...STICKS_single.txt
 In case stick_doppler read was true all found centre frequencies doppler splittings and intensities are saved in a file ending with ...STICKS_DOPPLER.txt.
-It is possible to simply load these files into python3 scripts by using the np.loadtxt('filename') function.
+It is possible to simply load these files into python3 scripts by using the `np.loadtxt('filename')` function.
 
 
 ## Examples
@@ -110,11 +109,11 @@ I recommend to start with one of the examples below, which are preconfigured for
 ### Example 1: A single Resonator .dat file
 This spectrum of O13CS is from the PARIS article published in Rev. Sci. Instrum. 96, 054706 (2025)
 https://doi.org/10.1063/5.0256434
-The range parameter is set to **0.5 MHz**
-The Readscan_and_plotscan_v09082025.py script loads a single file and creates an amplitude spectrum with no Kaiser window applied by default. To reproduce the article figure, run the script with `Kaiser=10.0` and apply a `tail_cut` of a few 100µs.
+The range parameter is set to `rangeMHz = 0.5` MHz.
+The Readscan_and_plotscan_v09082025.py script loads a single file and creates an amplitude spectrum with no Kaiser window applied by default. To reproduce the article figure, run the script with `Kaiser=10.0` and apply a `tail_cut=400 ` of 400µs.
 Stick spectrum generation is enabled, while Doppler finder is disabled, producing a file listing individual Doppler components.
 The figure shows the resulting plot after running the script. Detected single lines are marked with red bars to help identify any missed lines for manual selection.
-The created ...SICKS_single.txt then contains the four lines and their intensities:
+The created ...STICKS_single.txt then contains the four lines and their intensities:
 ```
     1.212382531830416e+04   6.124389530491169e-02
     1.212383055321025e+04   1.091628013093178e-01
@@ -216,6 +215,6 @@ stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental
      *    General code cleanup (removed comments and dead code)
      *    Renamed `Kaiser_Head` and `Kaiser_Tail` to `head_cut` and `tail_cut`
      *    `CompiledSpectrum_MASKED` files are now created only if maskedlines is not empty
-     *    Changed local threshold from a fixed 2.5 to user-configurable via(stick_localthresh).
+     *    Changed local threshold from a fixed 2.5 to user-configurable via `stick_localthresh`.
 -    First Uploaded Version: v11072024
 

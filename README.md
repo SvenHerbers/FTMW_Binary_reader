@@ -19,10 +19,10 @@ The documentation is divided into several parts. It begins with an overview of t
 ### General Information
 The program consists of two Python3 files:
 
-    OpenBinary_module_v11072024.py
+    OpenBinary_module_v09082025.py
     A module containing functions for reading and processing the binary files.
 
-    Readscan_and_plotscan_v10072024.py 
+    Readscan_and_plotscan_v09082025.py
     The main script that you should run to launch the program.
 
 Make sure both files are located in the same directory. For convenience, you can place them in the same folder as your .dat files to avoid specifying full file paths.
@@ -59,62 +59,43 @@ To have the script working on your files you have to adjust the first INPUT line
 ```
 ##### INPUT
 
-label    = "a_"  # This is how your filnames start! can include path information if not in the same folder.
-                 # The label is a_ if your files are called 'a_00001.dat' etc
+label    = "FileLabel_" # Label before index of filename. e.g. "FileLabel_00040.dat"
+startidx =      40      # Starting index (5-digits at end of file names). As example: 40.
+endidx   =      40      # Ending index. If single filed set endidx to startidx
 
-JUGDATA = False     # If False, Ftmw++ .dat file is loaded, if True, fies from older machines, so called JUG files are loaded.
+masklines=      []      # Lines to remove
+maskwidth=      0.1     # +-width (MHz) to mask
 
-PowerSpectrum = False  #True shows the square of the usual amplitude spectrum, which is preferred by some, but the default is False and the amplitude spectrum is shown.
-
-masklines=[999.9123,12321.0]  # Sometimes you have artifacts or dirt in your measurment that you know of. 
-                              # To put a zero-mask over it add the centre of the region into the 'masklines' list.
-
-maskwidth=0.1                 # +-width around centre that will be removed by mask in MHz.
-
-startidx =  1      # Starting index, you can ommit or add the leading zeros, it works either way. the file indices must consist of 5 digits.
-                   # A generic name produced by FTMW++ is for example a_00001.dat.
-
-endidx   = 3      # End index
-                  # The last index in the set of files you want to analyse. with label = "a_" startidx = 1 and endidx =3 the files that
-                  # are expected by the program are a_00001.dat a_00002.dat a_00003.dat. It will load them and stitch them together. 
-                  # For a single .dat file set startidx=endidx.
-
-forcecalc= 1      # if zero, the script checks if it already ran once and produced a spectrum file and plots that instead of recalculating.
-                  # If 1, recalculation is forced.
-                  # This can really save time when you just want to open the previously computed spectrum and not run through all .dat files again.
-
-rangeMHz = 501    # In many cases, especially in resonator measurements, you don’t want to plot the entire FFT spectrum.
-                  # Instead, you focus on a specific region around the resonator frequency.
-                  # For 1 GHz broadband measurements, a value around +-501 MHz works.
-                  # For narrow resonator scans, a value close to the resonator’s FWHM (~1.0 MHz) is usually sufficient.
-                  # If the mode drifts during the scan, consider increasing this value.
-                  # Similarly, if stitching artifacts (intensity jumps) appear, increasing this range can help mitigate them.
+forcecalc=      True    # 0 = use existing spectrum, 1 = force recalculation
+rangeMHz =      0.5     # +-range (MHz) around probe freq read from binary file; For Resonator: ~HWHM. For chirps: ~chirp_width/2
 
 ##### ADVANCED INPUT
-                     # If you change these parameters, you might want to set forcecalc=1 to overwrite previous run.
-Kaiser = 4.          # application of a kaiserwindow with kaiserparameter Kaiser=beta. If zero, no kaiserwindow is used. 
-Kaiser_Tail= 0       # tailcut applied in mus
-Kaiser_Head = 0      # Headcut applied in mus
-rebin = False        # In case you want to reduce resolution and make a small low resolution plot, you can do so with this rebin option
-                     # rebin = False omits rebinning.
-rebinsize = 0.250    # this would use 250 kHz bins if rebin was True.
-stickspectrum = True        # This will produce a linelist based on peaks the script finds. The found peaks are highlighted as red bars in the GUI. It is really limited to onl finding strong lines.
-stick_dopplerread = False   # if this is turned on an approach is made to find doppler pairs based on stick_exampledoppler. Found doppler pairs are green the GUI.
-                            # The output files of stickspectrum and stick_dopplerread are both saved together with the spectrum and masked spectrum as .txt files in the folder of the data.
-                            # The script also prints the expected velocity of the jet in m/s based on this doppler splittings into the console.
+
+head_cut            = 0         # Tail cut (µs)
+tail_cut            = 0         # Head cut (µs)
+
+Kaiser              = 0.0       # Kaiser window beta; 0 = off (set forcecalc=1 if changing Kaiser parameters)
+
+rebin               = False     # Reduce resolution; 0/False = no rebinning (affects line list accuracy). To be used only to get compact complete spectra, does not work on single filed.
+rebinsize           = 0.250
+
+stickspectrum       = False     # Produce stick spectrum (uses stickthreshold)
+stickthreshold      = 2.5       # Peakfinder threshold (times global average)
+stick_localthresh   = 2.5       # Peakfinder threshold (times local average +-500 points)
+stickmaxtest        = 5         # Check +-stickmaxtest points for local maxima. If there are two maxima within this range only the larger one will be chosen.
+
+stick_dopplerread   = False     # Detect Doppler pairs using stick_exampledoppler. stickspectrum must be True as well for this option to be enabled.
+stick_exampledoppler= [[ 9736.70304, 0.05451],[18945.27468, 0.10987]] # Two [line, Doppler splitting] pairs to be picked manually from the spectrum.
+                                                                       # The script then calculates beam velocity and extrapolate expected splittings for automatic Doppler pair identification.
+stick_dopplerthresh = 0.011     # Max MHz difference in expected vs experimental Doppler splitting to match Doppler pairs
+
+rezero              = False     # Subtract noise floor via inverse-squared weighted average - recommended only for stitching broadband data
+
+JUGDATA             = False     # False: load Ftmw++ .dat files from startidx to endidx; True: load JUG single file with startidx and endidx ignored
+PowerSpectrum       = False     # Show power spectrum (True) or amplitude spectrum (False)
+
 ##### END OF INPUT
 
-
-######## Advanced control parameters 
-rezero = False         # substract noisefloor by the inverse squared value weighted average of each section. Should not be used for stitching resonator data, but can be helpful when stitching broadband data.
-stickthreshold = 2.5   # threshold in terms of global spectrum, reduce to perhaps find more lines. local threshold hardwired to 2.5 for three datapoints at and around maximum.
-stickmaxtest = 5       # checks for every point, stickmaxtest left and right of it, if it is the largest, it is identified as a local maximum and subjected to interpolation
-
-stick_exampledoppler = [[ 9736.70304,            0.05451],[18945.27468,        0.10987]] # SET FOR Helium
-                           # This is used to setup the automatic dopplerfinding. Add one centre frequency and its +- Doppler splittin line at the start of the spectrum, and one from the end
-stick_dopplerthresh = 0.015# SET FOR Helium: defines how precise in MHz the doppler must be to identify a pair - depends on how much fine structure you have but 15 kHz should be fine in most cases
-# exponential window not tested:
-exponentialwindow=ew = 0 # exponentialwindow parameter , 0 deactivates it
 ```
 
 After setting up these paramters you should be able to simply run the script!
@@ -125,46 +106,116 @@ It is possible to simply load these files into python3 scripts by using the np.l
 
 
 ## Examples
-It might be best to start with one of the examples below, already set up, perhaps, for a similar application as you are intending to use it
+I recommend to start with one of the examples below, which are preconfigured for applications perhaps similar to yours.
 ### Example 1: A single Resonator .dat file
-Shown in the spectrum of O13CS used in the PARIS article in Rev. Sci. Instrum. 96, 054706 (2025)
+This spectrum of O13CS is from the PARIS article published in Rev. Sci. Instrum. 96, 054706 (2025)
 https://doi.org/10.1063/5.0256434
 The range parameter is set to **0.5 MHz**
-The Readscan_and_plotscan_v10072024.py is set up to open a single file as amplitude spectrum. No Kaiser window applied. To repduce the article figure run the script with Kaiser=10.0!
-stickspectrum and doppler finder are deactivated
-![image](https://github.com/user-attachments/assets/2ee1daf2-66fa-4d4f-9d8b-48e4e37e7876)
+The Readscan_and_plotscan_v09082025.py script loads a single file and creates an amplitude spectrum with no Kaiser window applied by default. To reproduce the article figure, run the script with Kaiser=10.0 and apply a tail cut of a few 100µs.
+Stick spectrum generation is enabled, while Doppler finder is disabled, producing a file listing individual Doppler components.
+The figure shows the resulting plot after running the script. Detected single lines are marked with red bars to help identify any missed lines for manual selection.
+The created ...SICKS_single.txt then contains the four lines and their intensities:
+```
+    1.212382531830416e+04   6.124389530491169e-02
+    1.212383055321025e+04   1.091628013093178e-01
+    1.212385206974306e+04   5.292331097704019e-02
+    1.212385739774715e+04   1.109891429754152e-01
+```
+<img width="1496" height="785" alt="image" src="https://github.com/user-attachments/assets/a23a750f-94ed-459b-a3dc-6936d3ca0a55" />
+
 
 ### Example 2: A resonator Scan - multiple .dat files
-update 20.06.2025 : increased range parameter and updated readme descritpion a little.
-update 23.06.2025 : changed rezero to False, it should not be used with resonator scans.
+Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to 1.0 MHz — increasing this value generally improves stitching quality but may reduce signal-to-noise ratio. (Opening single files still gives the best signal-to-noise.)
 
-Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to 1.0 MHz — increasing this value generally improves the stitching quality, though at the expense of signal-to-noise ratio (opening single flies will still give you the best signal-to-noise).
+In this example, startidx and endidx are set to different values. The Doppler line detection routine is activated: by providing the central frequency and Doppler splitting of two reference lines to stick_exampledoppler, the script attempts to identify corresponding Doppler pairs throughout the spectrum. These reference lines can be located anywhere, not necessarily at the spectrum’s start or end. To also find weaker peaks in the spectrum, the threshold parameters were finetuned.
 
-In this example, startidx and endidx are set to different values. The Doppler line detection routine is also activated: by providing the central frequency and the Doppler splitting of two lines to the stick_exampledoppler script, the script attempts to identify corresponding Doppler pairs. These reference lines do not really need to be located at the spectrum’s start or end - they can be located anywhere.
+```
+stickspectrum       = True      # Produce stick spectrum (uses stickthreshold)
+stickthreshold      = 2.0       # Peakfinder threshold (times global average)
+stick_localthresh   = 1.0       # Peakfinder threshold (times local average +-500 points)
+stickmaxtest        = 5         # Check +-stickmaxtest points for local maxima. If there are two maxima within this range only the larger one will be chosen.
 
-The screenshot shows the lines that were automatically detected by the script marked with green bars. For each detected Doppler pair, the central frequency and other relevant data are saved to the STICKS_DOPPLER file.
+stick_dopplerread   = True     # Detect Doppler pairs using stick_exampledoppler
+stick_exampledoppler= [[ 16906.28269,     0.04489],[16906.84839,    0.04588]] # Two [line, Doppler splitting] pairs to be picked manually from the spectrum.
+                                                                       # The script then calculates beam velocity and extrapolate expected splittings for automatic Doppler pair identification.
+stick_dopplerthresh = 0.011     # Max MHz difference in expected vs experimental Doppler splitting to match Doppler pairs
+```
 
-Note: The weaker lines at the ends of the hyperfine structure are not picked up by the automatic peak-finding routine, as they are too weak relative to the average rest of the spectrum, which can happen even for stronger lines if only dense small sections of a spectrum are measured. These weaker lines must be selected manually by the user via the GUI (double left-click to mark left Doppler, double right-click to mark right Doppler, and use the respective fields to copy data to the clipboard). 
-![image](https://github.com/user-attachments/assets/dba070ee-3f4f-49ba-9631-0fd8300a6344)
+The screenshot shows lines automatically detected by the script, marked with green bars. For each detected Doppler pair, the central frequency intensity and +-Doppler splitting are saved to the STICKS_DOPPLER file:
+```
+             16906.28339   3.27175e-02       0.04554
+             16906.29682   2.84541e-02       0.04436
+             16906.71248   1.83060e-01       0.04546
+             16906.71767   2.29530e-01       0.04026
+             16906.72317   2.73542e-01       0.04575
+             16906.84839   3.30348e-01       0.04586
+             16906.93670   2.28173e-01       0.04245
+             16906.94190   2.40895e-01       0.04765
+             16907.02444   1.46097e-01       0.04529
+             16907.02964   1.58819e-01       0.04009
+             16907.03531   1.64840e-01       0.04575
+             16907.05179   1.41352e-01       0.04767
+             16907.07131   9.29456e-02       0.04622
+             16907.14512   1.53600e-01       0.04566
+             16907.18148   8.40525e-02       0.04567
+```
+
+Note: Weaker lines at the edges of the hyperfine structure may not be picked up by the automatic peak-finding routine because they are too weak relative to the spectrum’s local or global average. These weaker lines must be selected manually via the GUI: double left-click to mark the left Doppler, double right-click for the right Doppler, and use the respective fields to copy data to the clipboard. It is also possible to attempt to fine tune stickthreshold and stick_localthresh as done in the case of this example.  
+
+<img width="1538" height="788" alt="image" src="https://github.com/user-attachments/assets/a6597de6-78b6-4077-9a55-3bb680f695b6" />
+
 
 
 ### Example 3: A single 1GHz chirp broadband .dat file
-Shown is a broadband spectrum of OCS in Neon also shown in the PARIS article.
-The range parameter is set to **501 MHz**
-Again run with doppler peak finding, this time I simply entered two times the centre frequency and dopplerspliting of the main isotopologue of OCS, because 2 different lines are just to improve things, but not strictly required.
-For the broadband measurments at PARIS there is always the DC-artifact, by default at the centre of the measurment. in this case it lies at 11750, so I added it to the mask list!
+Shown is a broadband spectrum of OCS in Neon, also featured in the PARIS article. The range parameter is set to +-501 MHz for the broadband spectrum, which comprises slighlty more than 1GHz of data.
 
-![image](https://github.com/user-attachments/assets/8d914a19-44e0-4720-93e0-63027c9a1c4f)
+Doppler peak finding is enabled. Here, I used the center frequency and Doppler splitting of the main OCS isotopologue twice to improve detection—using two different lines helps but isn’t strictly necessary.
+```
+stickspectrum       = True      # Produce stick spectrum (uses stickthreshold)
+stickthreshold      = 2.5       # Peakfinder threshold (times global average)
+stick_localthresh   = 2.5       # Peakfinder threshold (times local average +-500 points)
+stickmaxtest        = 5         # Check +-stickmaxtest points for local maxima. If there are two maxima within this range only the larger one will be chosen.
+
+stick_dopplerread   = True     # Detect Doppler pairs using stick_exampledoppler
+stick_exampledoppler= [[ 12162.97859,         0.03269],[ 12162.97859,         0.03269]] # Two [line, Doppler splitting] pairs to be picked manually from the spectrum.
+                                                                       # The script then calculates beam velocity and extrapolate expected splittings for automatic Doppler pair identification.
+stick_dopplerthresh = 0.011     # Max MHz difference in expected vs experimental Doppler splitting to match Doppler pairs
+```
+
+Broadband measurements at PARIS always have a DC artifact, usually at the measurement center. In this case, it appears at 11750, so I added it to the mask list.
+```
+masklines=      [11750] # Lines to remove
+maskwidth=      0.1     # +-width (MHz) to mask
+```
+<img width="1484" height="781" alt="image" src="https://github.com/user-attachments/assets/2c64e83b-915d-4696-8b7c-4cfa024403e1" />
+
 
 ### Example 4: Multiple 1GHz chirp broadband .dat files
-The PARIS broadband experiments works in 1GHz steps. So do the Hannover-IMPACT experiments it is possible to stitch them together shown here on the example of a portion of the 234-Tri-fluoro-toluene spectrum. (Canadian Journal of Physics 17 October 2019 https://doi.org/10.1139/cjp-2019-0477)
+The PARIS broadband experiments typically work in 1 GHz steps, as do the Hannover-IMPACT experiments. This example shows how to stitch such broadband files together using a portion of the 234-Trifluoro-toluene spectrum. (Canadian Journal of Physics 17 October 2019 https://doi.org/10.1139/cjp-2019-0477)
 
-The range parameter is set to **501 MHz** 
-The computation takes a bit longer, and you will the in the console how it runs through the files. This is one of the cases where you might consider setting forcecalc=0 in case you ran the script ones and just want to plot things again.
-Notice the plethora of found doppler pairs - it was a joy to fit those (though back in the days I didnt have a peak finder script yet!):
+The range parameter is set to **501 MHz**. 
+The computation takes longer, and the console will show progress through the files.
+If you’ve run the script once and only want to re-plot results, consider setting forcecalc=0 to skip recalculation.
+Notice the many Doppler pairs found!
+```
+stickspectrum       = True      # Produce stick spectrum (uses stickthreshold)
+stickthreshold      = 5.0       # Peakfinder threshold (times global average)
+stick_localthresh   = 1.5       # Peakfinder threshold (times local average +-500 points)
+stickmaxtest        = 5         # Check +-stickmaxtest points for local maxima. If there are two maxima within this range only the larger one will be chosen.
 
-![image](https://github.com/user-attachments/assets/545aa085-3b4e-49b4-853c-9b691f23704e)
+stick_dopplerread   = True     # Detect Doppler pairs using stick_exampledoppler
+stick_exampledoppler= [[ 13341.22734,             0.03578],[  9866.81114,             0.02523]] # Two [line, Doppler splitting] pairs to be picked manually from the spectrum.
+                                                                       # The script then calculates beam velocity and extrapolate expected splittings for automatic Doppler pair identification.
+stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental Doppler splitting to match Doppler pairs
+```
+<img width="1547" height="784" alt="image" src="https://github.com/user-attachments/assets/942f75b7-bd10-4591-aff6-21ad2bd7bbf7" />
 
 ## Version progress
-... I will write things here if something new comes up. For now this is the 10.07.2024 version of readscan running with the 11.07.2024 version of the module.
+-    v09082025:
+    *    Updated README and examples
+    *    General Code cleanup (removal of comments / dead code)
+    *    renamed Kaiser_Head and Kaiser_Tail to head_cut and tail_cut.
+    *    the CompiledSpectrum_MASKED files are now only created, if maskedlines is not empty
+    *    Changed local threshold from being hardwired to 2.5 to be a user input (stick_localthresh).
+-    First Uploaded Version: v11072024
 

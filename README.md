@@ -123,7 +123,7 @@ The created ...STICKS_single.txt then contains the four lines and their intensit
 <img width="1496" height="785" alt="image" src="https://github.com/user-attachments/assets/a23a750f-94ed-459b-a3dc-6936d3ca0a55" />
 
 
-### Example 2: A Resonator Scan - Multiple .dat Files
+### Example 2: A resonator scan - multiple .dat files
 Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to `rangeMHz = 1.0` MHz — increasing this value generally improves stitching quality but may reduce signal-to-noise ratio. (Opening single files still gives the best signal-to-noise.)
 
 In this example, startidx and endidx are set to different values. The Doppler line detection routine is activated: by providing the central frequency and Doppler splitting of two reference lines to stick_exampledoppler, the script attempts to identify corresponding Doppler pairs throughout the spectrum. These reference lines can be located anywhere, not necessarily at the spectrum’s start or end. To also find weaker peaks in the spectrum, the threshold parameters were finetuned.

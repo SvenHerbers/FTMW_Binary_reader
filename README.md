@@ -16,7 +16,7 @@ https://doi.org/10.1063/5.0256434
 ## Documentation
 The documentation is divided into several parts. It begins with an overview of the general setup and GUI, followed by a detailed explanation of all configurable parameters and their functions.
 
-### General Information
+### General information
 The program consists of two Python3 files:
 
     OpenBinary_module_v09082025.py
@@ -51,7 +51,7 @@ To copy a value to your clipboard, simply click on the field.
 These are the basic GUI functionalities.
 Advanced features—such as auto single-peak detection, auto Doppler-pair finding, resonator scan stitching, broadband file merging, window functions, and tail/head cutting—are described in the following sections.
 
-### Setting up the Readscan_and_plotscan_v10072024.py
+### Setting up the Readscan_and_plotscan script
 
 To have the script working on your files you have to adjust the first INPUT lines of the script. We will now go through each of the parameters:
 
@@ -106,7 +106,7 @@ It is possible to simply load these files into python3 scripts by using the `np.
 
 ## Examples
 I recommend to start with one of the examples below, which are preconfigured for applications perhaps similar to yours.
-### Example 1: A single Resonator .dat file
+### Example 1: A single resonator .dat file
 This spectrum of O13CS is from the PARIS article published in Rev. Sci. Instrum. 96, 054706 (2025)
 https://doi.org/10.1063/5.0256434
 The range parameter is set to `rangeMHz = 0.5` MHz.
@@ -123,7 +123,7 @@ The created ...STICKS_single.txt then contains the four lines and their intensit
 <img width="1496" height="785" alt="image" src="https://github.com/user-attachments/assets/a23a750f-94ed-459b-a3dc-6936d3ca0a55" />
 
 
-### Example 2: A resonator Scan - multiple .dat files
+### Example 2: A Resonator Scan - Multiple .dat Files
 Shown here is a section of the 4MPY spectrum, also featured in Fig. 19 of the PARIS article. The range parameter is set to `rangeMHz = 1.0` MHz — increasing this value generally improves stitching quality but may reduce signal-to-noise ratio. (Opening single files still gives the best signal-to-noise.)
 
 In this example, startidx and endidx are set to different values. The Doppler line detection routine is activated: by providing the central frequency and Doppler splitting of two reference lines to stick_exampledoppler, the script attempts to identify corresponding Doppler pairs throughout the spectrum. These reference lines can be located anywhere, not necessarily at the spectrum’s start or end. To also find weaker peaks in the spectrum, the threshold parameters were finetuned.

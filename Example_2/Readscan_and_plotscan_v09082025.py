@@ -21,8 +21,8 @@ rangeMHz =      1.0     # +-range (MHz) around probe freq read from binary file;
 
 ##### ADVANCED INPUT
 
-head_cut            = 0         # Tail cut (µs)
-tail_cut            = 0         # Head cut (µs)
+head_cut            = 0         # Head cut (µs)
+tail_cut            = 0         # Tail cut (µs)
 
 Kaiser              = 0.0       # Kaiser window beta; 0 = off (set forcecalc=1 if changing Kaiser parameters)
 
@@ -524,3 +524,4 @@ T5.on_clicked(copypaste(5))
 ax.set_xlabel("Frequency / MHz")
 ax.set_ylabel("Intensity / mVrms")
 plt.show()
+

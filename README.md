@@ -70,8 +70,8 @@ rangeMHz =      0.5     # +-range (MHz) around probe freq read from binary file;
 
 ##### ADVANCED INPUT
 
-head_cut            = 0         # Tail cut (µs)
-tail_cut            = 0         # Head cut (µs)
+head_cut            = 0         # Head cut (µs)
+tail_cut            = 0         # Tail cut (µs)
 
 Kaiser              = 0.0       # Kaiser window beta; 0 = off (set forcecalc=1 if changing Kaiser parameters)
 

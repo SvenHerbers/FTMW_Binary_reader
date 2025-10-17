@@ -210,7 +210,7 @@ stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental
 <img width="1547" height="784" alt="image" src="https://github.com/user-attachments/assets/942f75b7-bd10-4591-aff6-21ad2bd7bbf7" />
 
 ## Version progress
--    v17102925:
+-    v17102025:
      *    Improved intensity interpolation accuracy by approximately 1% (frequencies unaffected).
      *    Updated README and examples
 -    v09082025:

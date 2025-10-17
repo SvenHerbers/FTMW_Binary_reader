@@ -19,10 +19,10 @@ The documentation is divided into several parts. It begins with an overview of t
 ### General information
 The program consists of two Python3 files:
 
-    OpenBinary_module_v09082025.py
+    OpenBinary_module_v17102025.py
     A module containing functions for reading and processing the binary files.
 
-    Readscan_and_plotscan_v09082025.py
+    Readscan_and_plotscan_v17102025.py
     The main script that you should run to launch the program.
 
 Make sure both files are located in the same directory. For convenience, you can place them in the same folder as your .dat files to avoid specifying full file paths.

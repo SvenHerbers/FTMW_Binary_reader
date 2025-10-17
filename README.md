@@ -115,10 +115,10 @@ Stick spectrum generation is enabled, while Doppler finder is disabled, producin
 The figure shows the resulting plot after running the script. Detected single lines are marked with red bars to help identify any missed lines for manual selection.
 The created ...STICKS_single.txt then contains the four lines and their intensities:
 ```
-    1.212382531830416e+04   6.124389530491169e-02
-    1.212383055321025e+04   1.091628013093178e-01
-    1.212385206974306e+04   5.292331097704019e-02
-    1.212385739774715e+04   1.109891429754152e-01
+   1.212382531830416e+04   6.125854074573625e-02
+   1.212383055321025e+04   1.092498128914105e-01
+   1.212385206974306e+04   5.293214749581831e-02
+   1.212385739774715e+04   1.111550013795395e-01
 ```
 <img width="1496" height="785" alt="image" src="https://github.com/user-attachments/assets/a23a750f-94ed-459b-a3dc-6936d3ca0a55" />
 
@@ -142,21 +142,21 @@ stick_dopplerthresh = 0.011     # Max MHz difference in expected vs experimental
 
 The screenshot shows lines automatically detected by the script, marked with green bars. For each detected Doppler pair, the central frequency intensity and +-Doppler splitting are saved to the STICKS_DOPPLER file:
 ```
-             16906.28339   3.27175e-02       0.04554
-             16906.29682   2.84541e-02       0.04436
-             16906.71248   1.83060e-01       0.04546
-             16906.71767   2.29530e-01       0.04026
-             16906.72317   2.73542e-01       0.04575
-             16906.84839   3.30348e-01       0.04586
-             16906.93670   2.28173e-01       0.04245
-             16906.94190   2.40895e-01       0.04765
-             16907.02444   1.46097e-01       0.04529
-             16907.02964   1.58819e-01       0.04009
-             16907.03531   1.64840e-01       0.04575
-             16907.05179   1.41352e-01       0.04767
-             16907.07131   9.29456e-02       0.04622
-             16907.14512   1.53600e-01       0.04566
-             16907.18148   8.40525e-02       0.04567
+             16906.28339   3.29741e-02       0.04554
+             16906.29682   2.90078e-02       0.04436
+             16906.71248   1.85092e-01       0.04546
+             16906.71767   2.29729e-01       0.04026
+             16906.72317   2.74027e-01       0.04575
+             16906.84839   3.37883e-01       0.04586
+             16906.93670   2.32085e-01       0.04245
+             16906.94190   2.46080e-01       0.04765
+             16907.02444   1.47592e-01       0.04529
+             16907.02964   1.61587e-01       0.04009
+             16907.03531   1.68278e-01       0.04575
+             16907.05179   1.44006e-01       0.04767
+             16907.07131   9.49785e-02       0.04622
+             16907.14512   1.56857e-01       0.04566
+             16907.18148   8.50342e-02       0.04567
 ```
 
 Note: Weaker lines at the edges of the hyperfine structure may not be picked up by the automatic peak-finding routine because they are too weak relative to the spectrum’s local or global average. These weaker lines must be selected manually via the GUI: double left-click to mark the left Doppler, double right-click for the right Doppler, and use the respective fields to copy data to the clipboard. It is also possible to attempt to fine tune stickthreshold and stick_localthresh as done in the case of this example.  
@@ -210,6 +210,9 @@ stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental
 <img width="1547" height="784" alt="image" src="https://github.com/user-attachments/assets/942f75b7-bd10-4591-aff6-21ad2bd7bbf7" />
 
 ## Version progress
+-    v17102925:
+     *    Improved intensity interpolation accuracy by approximately 1% (frequencies unaffected).
+     *    Updated README and examples
 -    v09082025:
      *    Updated README and examples
      *    General code cleanup (removed comments and dead code)

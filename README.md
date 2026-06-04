@@ -19,10 +19,10 @@ The documentation is divided into several parts. It begins with an overview of t
 ### General information
 The program consists of two Python3 files:
 
-    OpenBinary_module_v17102025.py
+    OpenBinary_module_v04062026.py
     A module containing functions for reading and processing the binary files.
 
-    Readscan_and_plotscan_v17102025.py
+    Readscan_and_plotscan_v04062026.py
     The main script that you should run to launch the program.
 
 Make sure both files are located in the same directory. For convenience, you can place them in the same folder as your .dat files to avoid specifying full file paths.
@@ -210,11 +210,12 @@ stick_dopplerthresh = 0.015     # Max MHz difference in expected vs experimental
 <img width="1547" height="784" alt="image" src="https://github.com/user-attachments/assets/942f75b7-bd10-4591-aff6-21ad2bd7bbf7" />
 
 ## Version progress
+-    v04062026:
+     *    Modified OpenBinary_module_v04062026.py to improve readability and streamline the code structure.
+     *    Implemented minor improvements to message printing and file-writing.
 -    v17102025:
      *    Improved intensity interpolation accuracy by approximately 1% (frequencies unaffected).
-     *    Updated README and examples
 -    v09082025:
-     *    Updated README and examples
      *    General code cleanup (removed comments and dead code)
      *    Renamed `Kaiser_Head` and `Kaiser_Tail` to `head_cut` and `tail_cut`
      *    `CompiledSpectrum_MASKED` files are now created only if maskedlines is not empty
